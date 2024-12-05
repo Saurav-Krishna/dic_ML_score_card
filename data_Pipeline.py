@@ -303,31 +303,31 @@ def predict_score(df: pd.DataFrame, model, ml_features):
     # df['Scorecard_1'] = df["Scorecard_1"] +1
 
     # Save the results to a CSV file
-    df.to_csv("Testing_Score.csv", index=False)
+    # df.to_csv("Testing_Score.csv", index=False)
 
-    # try:
-    #     with conn.cursor() as cursor:
-    #         # Prepare an UPDATE statement
-    #         update_query = """
-    #         UPDATE source_file
-    #         SET scorecard = %s
-    #         WHERE "Organization Name" = %s
-    #         """
+    try:
+        with conn.cursor() as cursor:
+            # Prepare an UPDATE statement
+            update_query = """
+            UPDATE source_file
+            SET scorecard = %s
+            WHERE "Organization Name" = %s
+            """
             
-    #         # Execute updates for each row
-    #         for index, row in df.iterrows():
-    #             cursor.execute(update_query, (row['Scorecard_1'], row['Organization Name']))
+            # Execute updates for each row
+            for index, row in df.iterrows():
+                cursor.execute(update_query, (row['Scorecard_1'], row['Organization Name']))
             
-    #         # Commit the transaction
-    #         conn.commit()
-    #         print(f"Successfully updated {cursor.rowcount} rows with scorecards.")
+            # Commit the transaction
+            conn.commit()
+            print(f"Successfully updated {cursor.rowcount} rows with scorecards.")
     
-    # except Exception as e:
-    #     # Rollback in case of error
-    #     conn.rollback()
-    #     print(f"Error updating database with scorecards: {e}")
+    except Exception as e:
+        # Rollback in case of error
+        conn.rollback()
+        print(f"Error updating database with scorecards: {e}")
     
-    # return df
+    return df
 
     # return df
 
@@ -358,7 +358,7 @@ if __name__ == "__main__":
         data = query(conn,table_name=table_name)
     # describe_data(data)
     print("Step1 Done")
-    # drop_col(data)
+    drop_col(data)
     print('Dropping the col done.')
     # remove_Duplicates(data)
     print("Removing the duplicates done.")
@@ -379,7 +379,7 @@ if __name__ == "__main__":
     print("Fund type encoded")
     last_preprocessing(data)
     
-    # print(data.head(5))
+    print(data.head(5))
     # last_col_drop(data)
     # split_features_target(data)
     model = get_model("latest_xgboost_model.pkl")
