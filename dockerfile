@@ -11,4 +11,4 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 # Copying the application code
 COPY . .
-CMD ["python", "dataPipeline.py"]
+CMD ["python", "data_Pipeline.py"]

@@ -303,30 +303,31 @@ def predict_score(df: pd.DataFrame, model, ml_features):
     # df['Scorecard_1'] = df["Scorecard_1"] +1
 
     # Save the results to a CSV file
-    # df.to_csv("Testing_Score.csv", index=False)
-    try:
-        with conn.cursor() as cursor:
-            # Prepare an UPDATE statement
-            update_query = """
-            UPDATE source_file
-            SET scorecard = %s
-            WHERE "Organization Name" = %s
-            """
+    df.to_csv("Testing_Score.csv", index=False)
+
+    # try:
+    #     with conn.cursor() as cursor:
+    #         # Prepare an UPDATE statement
+    #         update_query = """
+    #         UPDATE source_file
+    #         SET scorecard = %s
+    #         WHERE "Organization Name" = %s
+    #         """
             
-            # Execute updates for each row
-            for index, row in df.iterrows():
-                cursor.execute(update_query, (row['Scorecard_1'], row['Organization Name']))
+    #         # Execute updates for each row
+    #         for index, row in df.iterrows():
+    #             cursor.execute(update_query, (row['Scorecard_1'], row['Organization Name']))
             
-            # Commit the transaction
-            conn.commit()
-            print(f"Successfully updated {cursor.rowcount} rows with scorecards.")
+    #         # Commit the transaction
+    #         conn.commit()
+    #         print(f"Successfully updated {cursor.rowcount} rows with scorecards.")
     
-    except Exception as e:
-        # Rollback in case of error
-        conn.rollback()
-        print(f"Error updating database with scorecards: {e}")
+    # except Exception as e:
+    #     # Rollback in case of error
+    #     conn.rollback()
+    #     print(f"Error updating database with scorecards: {e}")
     
-    return df
+    # return df
 
     # return df
 
